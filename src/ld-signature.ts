@@ -2,12 +2,15 @@ import * as crypto from 'crypto';
 import * as jsonld from 'jsonld';
 import { CONTEXTS } from './contexts';
 import { inspect } from 'util';
+import fetch from 'node-fetch';
+import { httpAgent, httpsAgent } from './agent';
 
 // RsaSignature2017 based from https://github.com/transmute-industries/RsaSignature2017
 
 export class LdSignature {
 	public debug = false;
 	public preLoad = true;
+	public loderTimeout = 10 * 1000;
 
 	constructor() {
 	}
@@ -96,9 +99,31 @@ export class LdSignature {
 			}
 
 			if (this.debug) console.debug(`MISS: ${url}`);
-			const result = await (jsonld as any).documentLoaders.node()(url);
-			return result;
+			const document = await this.fetchDocument(url);
+			return {
+				contextUrl: null,
+				document: document,
+				documentUrl: url
+			};
 		};
+	}
+
+	private async fetchDocument(url: string) {
+		const json = await fetch(url, {
+			headers: {
+				Accept: 'application/ld+json, application/json',
+			},
+			timeout: this.loderTimeout,
+			agent: u => u.protocol == 'http:' ? httpAgent : httpsAgent,
+		}).then(res => {
+			if (!res.ok) {
+				throw `${res.status} ${res.statusText}`;
+			} else {
+				return res.json();
+			}
+		});
+
+		return json;
 	}
 
 	public sha256(data: string): string {

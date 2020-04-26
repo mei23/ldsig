@@ -29,6 +29,7 @@ describe('RsaSignature2017', () => {
 	it('Basic sign/verify no preLoad', async () => {
 		const ldSignature = new LdSignature();
 		ldSignature.preLoad = false;
+		ldSignature.debug = true;
 
 		const kp = await genKeyPair();
 
@@ -47,6 +48,7 @@ describe('RsaSignature2017', () => {
 	it('Mastodon no preLoad', async () => {
 		const ldSignature = new LdSignature();
 		ldSignature.preLoad = false;
+		ldSignature.debug = true;
 
 		const verified = await ldSignature.verifyRsaSignature2017(activity, actor.publicKey.publicKeyPem);
 		assert.strictEqual(verified, true);
