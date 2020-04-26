@@ -87,8 +87,8 @@ function getLoader() {
 		}
 
 		//console.log(`MISS: ${url}`);
-		throw `Remote resolve disabled for ${url}`
-		//return (jsonld as any).documentLoaders.node()(url);
+		const result = await (jsonld as any).documentLoaders.node()(url);
+		return result;
 	};
 }
 
