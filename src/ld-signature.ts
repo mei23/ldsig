@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
 import * as jsonld from 'jsonld';
 import { CONTEXTS } from './contexts';
+import { inspect } from 'util';
 
 // RsaSignature2017 based from https://github.com/transmute-industries/RsaSignature2017
 
@@ -74,6 +75,8 @@ async function normalize(data: any) {
 
 function getLoader() {
 	return async (url, options) => {
+		if (!url.match('^https?\:\/\/')) throw `Invalid URL ${url}`;
+
 		if (url in CONTEXTS) {
 			//console.log(`HIT: ${url}`);
 			return {
