@@ -10,10 +10,10 @@
     "@types/mocha" "*"
     "@types/node" "*"
 
-"@types/jsonld@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@types/jsonld/-/jsonld-1.5.1.tgz#361e98bdc07814f5c98a42b4063430b243a8fa9b"
-  integrity sha512-8XI88iiCBVqmNCMBqPOgJhJPPuiIW1Tp2sXqe3NwD137ljhQVkDWY8cuYBBDZQoBYfGzUJvja527bbwqVbRnHQ==
+"@types/jsonld@1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@types/jsonld/-/jsonld-1.5.2.tgz#6de5589f72a73be07f2d0a99a39337f4c4518a78"
+  integrity sha512-e6mgulD3RB3lrjGN6Vvu3ixpRSZ2Qwvsm0oSQIuHsAQUvRklrqnmvKNNyXcQTh/PbB+TrHVVmdLHeYFCH52QnA==
 
 "@types/mocha@*", "@types/mocha@^8.2.0":
   version "8.2.0"
@@ -1797,18 +1797,17 @@ json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
-jsonld@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-3.1.1.tgz#ec9cf9f8aaacc17642a73715dfd788d2c1a51a74"
-  integrity sha512-GrqERUMZtMcdP8WgTt7drF3Ixf0dERA2Q4X3hTLyKt7CJTTQ5cM1vAHuX797piAejuh/KwNdKklKVB1kfYcJbw==
+jsonld@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-4.0.1.tgz#b8d464ae94bf00b54a219a99782cb488c49842d5"
+  integrity sha512-ltEqMQB37ZxZnsgmI+9rqHYkz1M6PqUykuS1t2aQNuH1oiLrUDYz5nyVkHQDgjFd7CFKTIWeLiNhwdwFrH5o5A==
   dependencies:
     canonicalize "^1.0.1"
     lru-cache "^5.1.1"
     object.fromentries "^2.0.2"
-    rdf-canonize "^1.0.2"
+    rdf-canonize "^2.0.1"
     request "^2.88.0"
     semver "^6.3.0"
-    xmldom "0.1.19"
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -2184,11 +2183,6 @@ node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
-node-forge@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.1.tgz#775368e6846558ab6676858a4d8c6e8d16c677b5"
-  integrity sha512-G6RlQt5Sb4GMBzXvhfkeFmbqR6MzhtnT7VTHuLadjkii3rdYHNdw0m8zA4BTxVIh68FicCQ2NSUANpsqkr9jvQ==
 
 normalize-package-data@^2.3.2:
   version "2.5.0"
@@ -2577,13 +2571,13 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
-rdf-canonize@^1.0.2:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/rdf-canonize/-/rdf-canonize-1.1.0.tgz#61d1609bbdb3234b8f38c9c34ad889bf670e089d"
-  integrity sha512-DV06OnhVfl2zcZJQCt+YvU+hoZVgpyQpNFLeAmghq8RJybUxD3B4LRzlBquYS5k+LLd8/c3g5Gnhkqjw5qRMvg==
+rdf-canonize@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/rdf-canonize/-/rdf-canonize-2.0.1.tgz#12c9b8b41570cd669d9b152c9e679063478ba194"
+  integrity sha512-/GVELjrfW8G/wS4QfDZ5Kq68cS1belVNJqZlcwiErerexeBUsgOINCROnP7UumWIBNdeCwTVLE9NVXMnRYK0lA==
   dependencies:
-    node-forge "^0.9.1"
     semver "^6.3.0"
+    setimmediate "^1.0.5"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -2839,6 +2833,11 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-extendable "^0.1.1"
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
+
+setimmediate@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
+  integrity sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=
 
 shebang-command@^2.0.0:
   version "2.0.0"
@@ -3507,11 +3506,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-
-xmldom@0.1.19:
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.19.tgz#631fc07776efd84118bf25171b37ed4d075a0abc"
-  integrity sha1-Yx/Ad3bv2EEYvyUXGzftTQdaCrw=
 
 xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.2"
