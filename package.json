@@ -16,7 +16,7 @@
     "@types/node-fetch": "^2.5.10",
     "gulp": "^4.0.2",
     "gulp-mocha": "^8.0.0",
-    "jsonld": "4.0.1",
+    "jsonld": "5.2.0",
     "lookup-dns-cache": "^2.1.0",
     "mocha": "^8.3.2",
     "node-fetch": "^2.6.1",
