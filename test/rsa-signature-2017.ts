@@ -4,6 +4,7 @@ import { genKeyPair } from '../src/utils';
 
 const data = {
 	"@context": [
+		"https://www.w3.org/ns/activitystreams",
 		"https://w3id.org/identity/v1",
 		{
 			"alsoKnownAs": { '@id': 'as:alsoKnownAs', '@type': '@id' },
