@@ -18,6 +18,7 @@ const data = {
 describe('RsaSignature2017', () => {
 	it('Basic sign/verify', async () => {
 		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
 
 		const kp = await genKeyPair();
 
@@ -40,6 +41,7 @@ describe('RsaSignature2017', () => {
 
 	it('Mastodon', async () => {
 		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
 
 		const verified = await ldSignature.verifyRsaSignature2017(activity, actor.publicKey.publicKeyPem);
 		assert.strictEqual(verified, true);

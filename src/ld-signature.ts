@@ -89,7 +89,7 @@ export class LdSignature {
 
 			if (this.preLoad) {
 				if (url in CONTEXTS) {
-					if (this.debug) console.debug(`HIT: ${url}`);
+					if (this.debug) console.debug(`PRELOAD: ${url}`);
 					return {
 						contextUrl: null,
 						document: CONTEXTS[url],
@@ -98,7 +98,7 @@ export class LdSignature {
 				}
 			}
 
-			if (this.debug) console.debug(`MISS: ${url}`);
+			if (this.debug) console.debug(`FETCH: ${url}`);
 			const document = await this.fetchDocument(url);
 			return {
 				contextUrl: null,
