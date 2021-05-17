@@ -13,7 +13,11 @@ async function main() {
 			"https://w3id.org/identity/v1",
 		],
 		"title": "a",
+		"xxxx": "x"
 	};
+
+	const compacted = await ldSignature.compact(data);
+	console.log(`compacted: ${JSON.stringify(compacted)}`);
 
 	const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
 	console.log(signed);
