@@ -136,7 +136,7 @@ const security_v1 = {
     "signatureAlgorithm": "sec:signingAlgorithm",
     "signatureValue": "sec:signatureValue"
   }
-}
+};
 
 const activitystreams = {
   "@context": {
@@ -510,11 +510,15 @@ const activitystreams = {
     "shares": {
       "@id": "as:shares",
       "@type": "@id"
+    },
+    "alsoKnownAs": {
+      "@id": "as:alsoKnownAs",
+      "@type": "@id"
     }
   }
 };
 
-export const CONTEXTS = {
+export const CONTEXTS: Record<string, any> = {
   "https://w3id.org/identity/v1": id_v1,
   "https://w3id.org/security/v1": security_v1,
   "https://www.w3.org/ns/activitystreams": activitystreams,
