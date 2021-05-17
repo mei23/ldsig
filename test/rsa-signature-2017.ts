@@ -5,8 +5,12 @@ import { genKeyPair } from '../src/utils';
 const data = {
 	"@context": [
 		"https://w3id.org/identity/v1",
+		{
+			"alsoKnownAs": { '@id': 'as:alsoKnownAs', '@type': '@id' },
+		}
 	],
 	"title": "a",
+	"alsoKnownAs": "https://example.com/user/a"
 };
 
 describe('RsaSignature2017', () => {
