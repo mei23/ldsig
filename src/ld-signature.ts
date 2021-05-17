@@ -89,7 +89,7 @@ export class LdSignature {
 
 			if (this.preLoad) {
 				if (url in CONTEXTS) {
-					if (this.debug) console.debug(`PRELOAD: ${url}`);
+					if (this.debug) console.debug(`PRELOADED: ${url}`);
 					return {
 						contextUrl: null,
 						document: CONTEXTS[url],
