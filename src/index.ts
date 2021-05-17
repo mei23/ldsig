@@ -19,6 +19,9 @@ async function main() {
 	const compacted = await ldSignature.compact(data);
 	console.log(`compacted: ${JSON.stringify(compacted)}`);
 
+	const normalized = await ldSignature.normalize(data);
+	console.log(`normalized: ${JSON.stringify(normalized)}`);
+
 	const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
 	console.log(signed);
 

@@ -4,6 +4,13 @@ import { genKeyPair } from '../src/utils';
 
 const data = {
 	"@context": [
+		"https://w3id.org/identity/v1",
+	],
+	"title": "a",
+};
+
+const alsoKnownAsDuplicated = {
+	"@context": [
 		"https://www.w3.org/ns/activitystreams",
 		"https://w3id.org/identity/v1",
 		{
@@ -34,6 +41,20 @@ describe('RsaSignature2017', () => {
 		const kp = await genKeyPair();
 
 		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
+		assert.strictEqual(verified, true);
+	});
+
+	it('alsoKnownAsはリモートとローカル両方の@contextに存在します、大丈夫？', async () => {
+		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
+
+		const kp = await genKeyPair();
+
+		const compacted = await ldSignature.compact(alsoKnownAsDuplicated);
+		assert.strictEqual(compacted.alsoKnownAs, 'https://example.com/user/a', 'ちゃんとJSON-LDで認識されてる？');
+
+		const signed = await ldSignature.signRsaSignature2017(alsoKnownAsDuplicated, kp.privateKey, 'https://example.com/users/1');
 		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
 		assert.strictEqual(verified, true);
 	});
