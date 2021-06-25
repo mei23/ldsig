@@ -6,7 +6,7 @@ async function main() {
 
 	const ldSignature = new LdSignature();
 	ldSignature.debug = true;
-	ldSignature.preLoad = false;
+	ldSignature.preLoad = true;
 
 	const data = {
 		"@context": [
