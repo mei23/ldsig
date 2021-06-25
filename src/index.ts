@@ -1,8 +1,8 @@
+import { genRsaKeyPair } from './keypair';
 import { LdSignature } from './ld-signature';
-import { genKeyPair } from './utils';
 
 async function main() {
-	const kp = await genKeyPair();
+	const kp = await genRsaKeyPair();
 
 	const ldSignature = new LdSignature();
 	ldSignature.debug = true;

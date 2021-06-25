@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { LdSignature } from '../src/ld-signature';
-import { genKeyPair } from '../src/utils';
+import { genRsaKeyPair } from '../src/keypair';
 
 const data = {
 	"@context": [
@@ -26,7 +26,7 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genKeyPair();
+		const kp = await genRsaKeyPair();
 
 		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
 		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
@@ -38,7 +38,7 @@ describe('RsaSignature2017', () => {
 		ldSignature.preLoad = false;
 		ldSignature.debug = true;
 
-		const kp = await genKeyPair();
+		const kp = await genRsaKeyPair();
 
 		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
 		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
@@ -49,7 +49,7 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genKeyPair();
+		const kp = await genRsaKeyPair();
 
 		const compacted = await ldSignature.compact(alsoKnownAsDuplicated);
 		assert.strictEqual(compacted.alsoKnownAs, 'https://example.com/user/a', 'ちゃんとJSON-LDで認識されてる？');
