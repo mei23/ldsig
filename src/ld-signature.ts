@@ -35,12 +35,7 @@ export class LdSignature {
 		}
 
 		const toBeSigned = await this.createVerifyData(data, options);
-
-		const signer = crypto.createSign('sha256');
-		signer.update(toBeSigned);
-		signer.end();
-
-		const signature = signer.sign(privateKey);
+		const signature = crypto.sign('sha256', Buffer.from(toBeSigned), privateKey);
 
 		return {
 			...data,
@@ -53,9 +48,7 @@ export class LdSignature {
 
 	public async verifyRsaSignature2017(data: any, publicKey: string): Promise<boolean> {
 		const toBeSigned = await this.createVerifyData(data, data.signature);
-		const verifier = crypto.createVerify('sha256');
-		verifier.update(toBeSigned);
-		return verifier.verify(publicKey, data.signature.signatureValue, 'base64');
+		return crypto.verify('sha256', Buffer.from(toBeSigned), publicKey, Buffer.from(data.signature.signatureValue, 'base64'));
 	}
 
 	public async createVerifyData(data: any, options: any) {
