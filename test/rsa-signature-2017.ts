@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { LdSignature } from '../src/ld-signature';
-import { genRsaKeyPair } from '../src/keypair';
+import { genRsaKeyPair, genEcKeyPair } from '../src/keypair';
 
 const data = {
 	"@context": [
@@ -31,6 +31,74 @@ describe('RsaSignature2017', () => {
 		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
 		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
 		assert.strictEqual(verified, true);
+	});
+
+	it('Verification fails if another key', async () => {
+		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
+
+		const kp = await genRsaKeyPair();
+		const kp2 = await genRsaKeyPair();
+
+		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+		const verified = await ldSignature.verifyRsaSignature2017(signed, kp2.publicKey);
+		assert.strictEqual(verified, false);
+	});
+
+	it('Verification fails if tampered', async () => {
+		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
+
+		const kp = await genRsaKeyPair();
+
+		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+
+		const tampered = { ...signed };
+		tampered.title = 'b';
+
+		const verified = await ldSignature.verifyRsaSignature2017(tampered, kp.publicKey);
+		assert.strictEqual(verified, false);
+	});
+
+	it('Rejects if signature.type is not RsaSignature2017', async () => {
+		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
+
+		const kp = await genRsaKeyPair();
+
+		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+
+		const another = { ...signed };
+		another.signature.type = 'AnotherSignature';
+
+		await assert.rejects(ldSignature.verifyRsaSignature2017(data, kp.publicKey), {
+			message: 'signature is not RsaSignature2017'
+		});
+	});
+
+	it('Rejects if privateKey is not rsa', async () => {
+		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
+
+		const kp = await genEcKeyPair();
+
+		await assert.rejects(ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1'), {
+			message: 'privateKey is not rsa'
+		});
+	});
+
+	it('Rejects if publicKey is not rsa', async () => {
+		const ldSignature = new LdSignature();
+		ldSignature.debug = true;
+
+		const kp = await genRsaKeyPair();
+		const kp2 = await genEcKeyPair();
+
+		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+
+		await assert.rejects(ldSignature.verifyRsaSignature2017(signed, kp2.publicKey), {
+			message: 'publicKey is not rsa'
+		});
 	});
 
 	it('Basic sign/verify no preLoad', async () => {
