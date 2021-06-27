@@ -1,9 +1,10 @@
 import * as crypto from 'crypto';
 import * as jsonld from 'jsonld';
 import { CONTEXTS } from './contexts';
-import { inspect } from 'util';
 
-// RsaSignature2017 based from https://github.com/transmute-industries/RsaSignature2017
+// https://docs.joinmastodon.org/spec/security/#ld
+// https://github.com/transmute-industries/RsaSignature2017
+// https://socialhub.activitypub.rocks/t/making-sense-of-rsasignature2017/347
 
 type RsaSignature2017Options = {
 	type: 'RsaSignature2017';
@@ -80,12 +81,13 @@ export class LdSignature {
 		delete transformedOptions['id'];
 		delete transformedOptions['signatureValue'];
 		const canonizedOptions = await this.normalize(transformedOptions);
-		const optionsHash = sha256(canonizedOptions);
+		const optionsHash = this.sha256(canonizedOptions);
+
 		const transformedData = { ...data };
 		delete transformedData['signature'];
 		const cannonidedData = await this.normalize(transformedData);
-		//console.log(cannonidedData);
-		const documentHash = sha256(cannonidedData);
+		const documentHash = this.sha256(cannonidedData);
+
 		const verifyData = `${optionsHash}${documentHash}`;
 		return verifyData;
 	}
@@ -93,6 +95,7 @@ export class LdSignature {
 	public async normalize(data: any) {
 		const customLoader = this.getLoader();
 		return await jsonld.normalize(data, {
+			algorithm: 'URDNA2015',
 			documentLoader: customLoader
 		});
 	}
@@ -134,10 +137,10 @@ export class LdSignature {
 			};
 		};
 	}
-}
 
-function sha256(data: string): string {
-	const hash = crypto.createHash('sha256');
-	hash.update(data);
-	return hash.digest('hex');
+	public sha256(data: string): string {
+		const hash = crypto.createHash('sha256');
+		hash.update(data);
+		return hash.digest('hex').toLowerCase();
+	}
 }
