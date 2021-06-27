@@ -24,12 +24,12 @@
   resolved "https://registry.yarnpkg.com/@types/jsonld/-/jsonld-1.5.5.tgz#c2238462a83e90f003929cef6a36eded2ceed069"
   integrity sha512-/4PvZJJh3Lqz9bkwvSwfyLWnR1xFQ7h4KLq8i0yaGjBBq09qLMJlCqvfXfE5qFEnClmWM+GK2Edjbb6QDS2SXQ==
 
-"@types/mocha@*", "@types/mocha@^8.2.2":
+"@types/mocha@*", "@types/mocha@8.2.2":
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-8.2.2.tgz#91daa226eb8c2ff261e6a8cbf8c7304641e095e0"
   integrity sha512-Lwh0lzzqT5Pqh6z61P3c3P5nm6fzQK/MMHl9UKeneAeInVflBSz1O2EkX6gM6xfJd7FBXBY5purtLx7fUiZ7Hw==
 
-"@types/node-fetch@^2.5.10":
+"@types/node-fetch@2.5.10":
   version "2.5.10"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.10.tgz#9b4d4a0425562f9fcea70b12cb3fcdd946ca8132"
   integrity sha512-IpkX0AasN44hgEad0gEF/V6EgR5n69VEqPEgnmoM8GsIGro3PowbWs4tR6IhxUTyPLpOn+fiGG6nrQhcmoCuIQ==
@@ -1177,7 +1177,7 @@ gulp-cli@^2.2.0:
     v8flags "^3.2.0"
     yargs "^7.1.0"
 
-gulp-mocha@^8.0.0:
+gulp-mocha@8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/gulp-mocha/-/gulp-mocha-8.0.0.tgz#7e02677782573a9dc844a9ee1d6de89ebccff2d6"
   integrity sha512-FdbBydfzszaES/gXfwD6RFq1yJTj4Z6328R1yqsmhf+t7hW2aj9ZD9Hz8boQShjZ9J8/w6tQBM5mePb8K2pbqA==
@@ -1189,7 +1189,7 @@ gulp-mocha@^8.0.0:
     supports-color "^8.1.1"
     through2 "^4.0.2"
 
-gulp@^4.0.2:
+gulp@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/gulp/-/gulp-4.0.2.tgz#543651070fd0f6ab0a0650c6a3e6ff5a7cb09caa"
   integrity sha512-dvEs27SCZt2ibF29xYgmnwwCYZxdxhQ/+LFWlbAW8y7jt68L/65402Lz3+CKy0Ov4rOs+NERmDq7YlZaDqUIfA==
@@ -1761,7 +1761,7 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mocha@^8.3.0, mocha@^8.4.0:
+mocha@8.4.0, mocha@^8.3.0:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/mocha/-/mocha-8.4.0.tgz#677be88bf15980a3cae03a73e10a0fc3997f0cff"
   integrity sha512-hJaO0mwDXmZS4ghXsvPVriOhsxQ7ofcpQdm8dE+jISUOKopitvnXFQmpRR7jd2K6VBG6E26gU3IAbXXGIbu4sQ==
@@ -1844,6 +1844,11 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+node-fetch@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 node-fetch@3.0.0-beta.9:
   version "3.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-3.0.0-beta.9.tgz#0a7554cfb824380dd6812864389923c783c80d9b"
@@ -1851,11 +1856,6 @@ node-fetch@3.0.0-beta.9:
   dependencies:
     data-uri-to-buffer "^3.0.1"
     fetch-blob "^2.1.1"
-
-node-fetch@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 normalize-package-data@^2.3.2:
   version "2.5.0"
