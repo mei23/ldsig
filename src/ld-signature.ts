@@ -7,6 +7,22 @@ import { httpAgent, httpsAgent } from './agent';
 
 // RsaSignature2017 based from https://github.com/transmute-industries/RsaSignature2017
 
+type RsaSignature2017Options = {
+	type: 'RsaSignature2017';
+	creator: string;
+	domain?: string;
+	nonce?: string;
+	created: string;
+};
+
+type RsaSignature2017 = RsaSignature2017Options & {
+	signatureValue: string;
+};
+
+function isRsaSignature2017(signature: any): signature is RsaSignature2017 {
+	return signature?.type === 'RsaSignature2017';
+}
+
 export class LdSignature {
 	public debug = false;
 	public preLoad = true;
@@ -15,26 +31,24 @@ export class LdSignature {
 	constructor() {
 	}
 
-	public async signRsaSignature2017(data: any, privateKey: string, creator: string, domain?: string, created?: Date): Promise<any> {
-		const options = {
+	public async signRsaSignature2017(data: any, privateKeyPem: string, creator: string, domain?: string, created?: Date) {
+		const options: RsaSignature2017Options = {
 			type: 'RsaSignature2017',
 			creator,
 			domain,
 			nonce: crypto.randomBytes(16).toString('hex'),
 			created: (created || new Date()).toISOString()
-		} as {
-			type: string;
-			creator: string;
-			domain: string;
-			nonce: string;
-			created: string;
 		};
 
 		if (!domain) {
 			delete options.domain;
 		}
 
+		const privateKey = crypto.createPrivateKey(privateKeyPem);
+		if (privateKey.asymmetricKeyType !== 'rsa') throw new Error('privateKey is not rsa');
+
 		const toBeSigned = await this.createVerifyData(data, options);
+
 		const signature = crypto.sign('sha256', Buffer.from(toBeSigned), privateKey);
 
 		return {
@@ -46,12 +60,19 @@ export class LdSignature {
 		};
 	}
 
-	public async verifyRsaSignature2017(data: any, publicKey: string): Promise<boolean> {
-		const toBeSigned = await this.createVerifyData(data, data.signature);
-		return crypto.verify('sha256', Buffer.from(toBeSigned), publicKey, Buffer.from(data.signature.signatureValue, 'base64'));
+	public async verifyRsaSignature2017(data: any, publicKeyPem: string): Promise<boolean> {
+		const signature = data.signature;
+		if (!isRsaSignature2017(signature)) throw new Error('signature is not RsaSignature2017');
+
+		const publicKey = crypto.createPublicKey(publicKeyPem);
+		if (publicKey.asymmetricKeyType !== 'rsa') throw new Error('publicKey is not rsa');
+	
+		const toBeSigned = await this.createVerifyData(data, signature);
+
+		return crypto.verify('sha256', Buffer.from(toBeSigned), publicKey, Buffer.from(signature.signatureValue, 'base64'));
 	}
 
-	public async createVerifyData(data: any, options: any) {
+	public async createVerifyData(data: any, options: RsaSignature2017Options) {
 		const transformedOptions = {
 			...options,
 			'@context': 'https://w3id.org/identity/v1'
