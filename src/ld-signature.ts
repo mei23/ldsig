@@ -25,7 +25,7 @@ function isRsaSignature2017(signature: any): signature is RsaSignature2017 {
 export class LdSignature {
 	public debug = false;
 	public preLoad = true;
-	public fetchFunc: (url: string) => Promise<any>;
+	public fetchFunc?: (url: string) => Promise<any>;
 
 	constructor() {
 	}
@@ -65,20 +65,20 @@ export class LdSignature {
 
 		const publicKey = crypto.createPublicKey(publicKeyPem);
 		if (publicKey.asymmetricKeyType !== 'rsa') throw new Error('publicKey is not rsa');
-	
+
 		const toBeSigned = await this.createVerifyData(data, signature);
 
 		return crypto.verify('sha256', Buffer.from(toBeSigned), publicKey, Buffer.from(signature.signatureValue, 'base64'));
 	}
 
-	public async createVerifyData(data: any, options: RsaSignature2017Options) {
+	public async createVerifyData(data: any, options: RsaSignature2017Options | RsaSignature2017) {
 		const transformedOptions = {
 			...options,
 			'@context': 'https://w3id.org/identity/v1'
 		};
 		delete transformedOptions['type'];
-		delete transformedOptions['id'];
-		delete transformedOptions['signatureValue'];
+		delete (transformedOptions as any)['id'];
+		delete (transformedOptions as any)['signatureValue'];
 		const canonizedOptions = await this.normalize(transformedOptions);
 		const optionsHash = this.sha256(canonizedOptions);
 
@@ -107,7 +107,7 @@ export class LdSignature {
 	}
 
 	private getLoader() {
-		return async (url, options) => {
+		return async (url: string): Promise<any> => {
 			if (!url.match('^https?\:\/\/')) throw `Invalid URL ${url}`;
 
 			if (this.preLoad) {
