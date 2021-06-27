@@ -25,7 +25,6 @@ function isRsaSignature2017(signature: any): signature is RsaSignature2017 {
 export class LdSignature {
 	public debug = false;
 	public preLoad = true;
-	public loderTimeout = 10 * 1000;
 	public fetchFunc: (url: string) => Promise<any>;
 
 	constructor() {
