@@ -1,6 +1,7 @@
 import * as assert from 'assert';
 import { LdSignature } from '../src/ld-signature';
 import { genRsaKeyPair, genEcKeyPair } from '../src/keypair';
+import { fetchDocument } from '../src/utils';
 
 const data = {
 	"@context": [
@@ -104,6 +105,7 @@ describe('RsaSignature2017', () => {
 	it('Basic sign/verify no preLoad', async () => {
 		const ldSignature = new LdSignature();
 		ldSignature.preLoad = false;
+		ldSignature.fetchFunc = fetchDocument;
 		ldSignature.debug = true;
 
 		const kp = await genRsaKeyPair();
@@ -138,6 +140,7 @@ describe('RsaSignature2017', () => {
 	it('Mastodon no preLoad', async () => {
 		const ldSignature = new LdSignature();
 		ldSignature.preLoad = false;
+		ldSignature.fetchFunc = fetchDocument;
 		ldSignature.debug = true;
 
 		const verified = await ldSignature.verifyRsaSignature2017(activity, actor.publicKey.publicKeyPem);

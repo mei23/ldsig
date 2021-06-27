@@ -2,8 +2,6 @@ import * as crypto from 'crypto';
 import * as jsonld from 'jsonld';
 import { CONTEXTS } from './contexts';
 import { inspect } from 'util';
-import fetch from 'node-fetch';
-import { httpAgent, httpsAgent } from './agent';
 
 // RsaSignature2017 based from https://github.com/transmute-industries/RsaSignature2017
 
@@ -27,6 +25,7 @@ export class LdSignature {
 	public debug = false;
 	public preLoad = true;
 	public loderTimeout = 10 * 1000;
+	public fetchFunc: (url: string) => Promise<any>;
 
 	constructor() {
 	}
@@ -81,12 +80,12 @@ export class LdSignature {
 		delete transformedOptions['id'];
 		delete transformedOptions['signatureValue'];
 		const canonizedOptions = await this.normalize(transformedOptions);
-		const optionsHash = this.sha256(canonizedOptions);
+		const optionsHash = sha256(canonizedOptions);
 		const transformedData = { ...data };
 		delete transformedData['signature'];
 		const cannonidedData = await this.normalize(transformedData);
 		//console.log(cannonidedData);
-		const documentHash = this.sha256(cannonidedData);
+		const documentHash = sha256(cannonidedData);
 		const verifyData = `${optionsHash}${documentHash}`;
 		return verifyData;
 	}
@@ -120,8 +119,14 @@ export class LdSignature {
 				}
 			}
 
+			if (!this.fetchFunc) {
+				if (this.debug) console.debug(`REJECT: ${url}`);
+				throw `REJECT: ${url}`;
+			}
+
 			if (this.debug) console.debug(`FETCH: ${url}`);
-			const document = await this.fetchDocument(url);
+			const document = await this.fetchFunc(url);
+
 			return {
 				contextUrl: null,
 				document: document,
@@ -129,28 +134,10 @@ export class LdSignature {
 			};
 		};
 	}
+}
 
-	private async fetchDocument(url: string) {
-		const json = await fetch(url, {
-			headers: {
-				Accept: 'application/ld+json, application/json',
-			},
-			timeout: this.loderTimeout,
-			agent: u => u.protocol == 'http:' ? httpAgent : httpsAgent,
-		}).then(res => {
-			if (!res.ok) {
-				throw `${res.status} ${res.statusText}`;
-			} else {
-				return res.json();
-			}
-		});
-
-		return json;
-	}
-
-	public sha256(data: string): string {
-		const hash = crypto.createHash('sha256');
-		hash.update(data);
-		return hash.digest('hex');
-	}
+function sha256(data: string): string {
+	const hash = crypto.createHash('sha256');
+	hash.update(data);
+	return hash.digest('hex');
 }
