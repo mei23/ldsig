@@ -27,10 +27,10 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
+		const rsa1 = await genRsaKeyPair();
 
-		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
-		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
+		const signed = await ldSignature.signRsaSignature2017(data, rsa1.privateKey, 'https://example.com/users/1');
+		const verified = await ldSignature.verifyRsaSignature2017(signed, rsa1.publicKey);
 		assert.strictEqual(verified, true);
 	});
 
@@ -38,10 +38,10 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
+		const rsa1 = await genRsaKeyPair();
 		const kp2 = await genRsaKeyPair();
 
-		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+		const signed = await ldSignature.signRsaSignature2017(data, rsa1.privateKey, 'https://example.com/users/1');
 		const verified = await ldSignature.verifyRsaSignature2017(signed, kp2.publicKey);
 		assert.strictEqual(verified, false);
 	});
@@ -50,14 +50,14 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
+		const rsa1 = await genRsaKeyPair();
 
-		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+		const signed = await ldSignature.signRsaSignature2017(data, rsa1.privateKey, 'https://example.com/users/1');
 
 		const tampered = { ...signed };
 		tampered.title = 'b';
 
-		const verified = await ldSignature.verifyRsaSignature2017(tampered, kp.publicKey);
+		const verified = await ldSignature.verifyRsaSignature2017(tampered, rsa1.publicKey);
 		assert.strictEqual(verified, false);
 	});
 
@@ -65,14 +65,14 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
+		const rsa1 = await genRsaKeyPair();
 
-		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+		const signed = await ldSignature.signRsaSignature2017(data, rsa1.privateKey, 'https://example.com/users/1');
 
 		const another = { ...signed };
 		another.signature.type = 'AnotherSignature';
 
-		await assert.rejects(ldSignature.verifyRsaSignature2017(data, kp.publicKey), {
+		await assert.rejects(ldSignature.verifyRsaSignature2017(data, rsa1.publicKey), {
 			message: 'signature is not RsaSignature2017'
 		});
 	});
@@ -81,9 +81,9 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genEcKeyPair();
+		const ec1 = await genEcKeyPair();
 
-		await assert.rejects(ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1'), {
+		await assert.rejects(ldSignature.signRsaSignature2017(data, ec1.privateKey, 'https://example.com/users/1'), {
 			message: 'privateKey is not rsa'
 		});
 	});
@@ -92,12 +92,12 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
-		const kp2 = await genEcKeyPair();
+		const rsa1 = await genRsaKeyPair();
+		const ec1 = await genEcKeyPair();
 
-		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
+		const signed = await ldSignature.signRsaSignature2017(data, rsa1.privateKey, 'https://example.com/users/1');
 
-		await assert.rejects(ldSignature.verifyRsaSignature2017(signed, kp2.publicKey), {
+		await assert.rejects(ldSignature.verifyRsaSignature2017(signed, ec1.publicKey), {
 			message: 'publicKey is not rsa'
 		});
 	});
@@ -108,10 +108,10 @@ describe('RsaSignature2017', () => {
 		ldSignature.fetchFunc = fetchDocument;
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
+		const rsa1 = await genRsaKeyPair();
 
-		const signed = await ldSignature.signRsaSignature2017(data, kp.privateKey, 'https://example.com/users/1');
-		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
+		const signed = await ldSignature.signRsaSignature2017(data, rsa1.privateKey, 'https://example.com/users/1');
+		const verified = await ldSignature.verifyRsaSignature2017(signed, rsa1.publicKey);
 		assert.strictEqual(verified, true);
 	});
 
@@ -119,13 +119,13 @@ describe('RsaSignature2017', () => {
 		const ldSignature = new LdSignature();
 		ldSignature.debug = true;
 
-		const kp = await genRsaKeyPair();
+		const rsa1 = await genRsaKeyPair();
 
 		const compacted = await ldSignature.compact(alsoKnownAsDuplicated);
 		assert.strictEqual(compacted.alsoKnownAs, 'https://example.com/user/a', 'ちゃんとJSON-LDで認識されてる？');
 
-		const signed = await ldSignature.signRsaSignature2017(alsoKnownAsDuplicated, kp.privateKey, 'https://example.com/users/1');
-		const verified = await ldSignature.verifyRsaSignature2017(signed, kp.publicKey);
+		const signed = await ldSignature.signRsaSignature2017(alsoKnownAsDuplicated, rsa1.privateKey, 'https://example.com/users/1');
+		const verified = await ldSignature.verifyRsaSignature2017(signed, rsa1.publicKey);
 		assert.strictEqual(verified, true);
 	});
 
