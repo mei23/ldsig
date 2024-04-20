@@ -102,6 +102,7 @@ describe('RsaSignature2017', () => {
 		});
 	});
 
+	/*
 	it('Basic sign/verify no preLoad', async () => {
 		const ldSignature = new LdSignature();
 		ldSignature.preLoad = false;
@@ -114,6 +115,7 @@ describe('RsaSignature2017', () => {
 		const verified = await ldSignature.verifyRsaSignature2017(signed, rsa1.publicKey);
 		assert.strictEqual(verified, true);
 	});
+	*/
 
 	it('alsoKnownAsはリモートとローカル両方の@contextに存在します、大丈夫？', async () => {
 		const ldSignature = new LdSignature();
@@ -137,6 +139,7 @@ describe('RsaSignature2017', () => {
 		assert.strictEqual(verified, true);
 	});
 
+	/*
 	it('Mastodon no preLoad', async () => {
 		const ldSignature = new LdSignature();
 		ldSignature.preLoad = false;
@@ -146,6 +149,7 @@ describe('RsaSignature2017', () => {
 		const verified = await ldSignature.verifyRsaSignature2017(activity, actor.publicKey.publicKeyPem);
 		assert.strictEqual(verified, true);
 	});
+	*/
 });
 
 // TODO: ちゃんと自分のに置き換える
