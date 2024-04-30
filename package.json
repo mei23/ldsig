@@ -19,7 +19,7 @@
     "jsonld": "8.3.2",
     "mocha": "10.4.0",
     "node-fetch": "2.6.7",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "typescript": "5.4.5"
   }
 }
