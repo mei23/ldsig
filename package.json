@@ -11,7 +11,7 @@
   "dependencies": {
     "@types/gulp-mocha": "^0.0.33",
     "@types/jsonld": "1.5.13",
-    "@types/mocha": "10.0.6",
+    "@types/mocha": "10.0.7",
     "@types/node": "20.12.7",
     "@types/node-fetch": "2.6.1",
     "gulp": "4.0.2",
